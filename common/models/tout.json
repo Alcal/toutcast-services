@@ -1,0 +1,33 @@
+{
+  "name": "Tout",
+  "plural": "Touts",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "content": {
+      "type": "string"
+    },
+    "location": {
+      "type": "geopoint",
+      "required": true,
+      "index": true
+    },
+    "live": {
+      "type": "boolean"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

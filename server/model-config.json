@@ -1,0 +1,64 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "ToutCastDEV",
+    "public": false
+  },
+  "AccessToken": {
+    "dataSource": "ToutCastDEV",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "ToutCastDEV",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "ToutCastDEV",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "ToutCastDEV",
+    "public": false
+  },
+  "Tout": {
+    "dataSource": "ToutCastDEV",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "BusinessCategory": {
+    "dataSource": "ToutCastDEV",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "ToutUser": {
+    "dataSource": "ToutCastDEV",
+    "public": true
+  },
+  "Locale": {
+    "dataSource": "ToutCastDEV",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  },
+  "Commerce": {
+    "dataSource": "ToutCastDEV",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
+  }
+}

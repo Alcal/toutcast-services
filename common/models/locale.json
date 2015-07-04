@@ -1,0 +1,32 @@
+{
+  "name": "Locale",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "location": {
+      "type": "geopoint",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "commerce": {
+      "type": "belongsTo",
+      "model": "Commerce",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": []
+}

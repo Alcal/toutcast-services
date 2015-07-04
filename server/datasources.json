@@ -1,0 +1,16 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "ToutCastDEV": {
+    "host": "ds059898.mongolab.com",
+    "port": 59898,
+    "url": "",
+    "database": "toutcast-dev",
+    "password": "tloz2112864",
+    "name": "ToutCastDEV",
+    "user": "heroku01",
+    "connector": "mongodb"
+  }
+}
