@@ -1,6 +1,6 @@
 {
   "name": "ToutUser",
-  "plural": "ToutUsers",
+  "plural": "ToutsUsers",
   "base": "User",
   "idInjection": true,
   "options": {
@@ -16,13 +16,7 @@
     }
   },
   "validations": [],
-  "relations": {
-    "commerces": {
-      "type": "hasOne",
-      "model": "Commerce",
-      "foreignKey": ""
-    }
-  },
+  "relations": {},
   "acls": [],
   "methods": []
 }
