@@ -31,7 +31,7 @@ module.exports = function(Tout) {
 				{arg:"cap",type:"Number"}
 				],
 			returns:{arg:"touts"},
-			http:{path:"/nearby", verb:"get", status:200, errorStatus:400}
+			http:{verb:"get", status:200, errorStatus:400}
 		}
 	);
 };
