@@ -25,6 +25,11 @@
       "type": "belongsTo",
       "model": "Commerce",
       "foreignKey": ""
+    },
+    "touts": {
+      "type": "hasMany",
+      "model": "Tout",
+      "foreignKey": ""
     }
   },
   "acls": [],

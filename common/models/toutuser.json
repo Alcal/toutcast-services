@@ -16,7 +16,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "commerces": {
+      "type": "hasOne",
+      "model": "Commerce",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": []
 }

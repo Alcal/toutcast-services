@@ -20,6 +20,11 @@
       "type": "hasOne",
       "model": "BusinessCategory",
       "foreignKey": ""
+    },
+    "locales": {
+      "type": "hasMany",
+      "model": "Locale",
+      "foreignKey": ""
     }
   },
   "acls": [],
