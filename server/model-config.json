@@ -60,5 +60,11 @@
     "public": true,
     "$promise": {},
     "$resolved": true
+  },
+  "Referal": {
+    "dataSource": "ToutCastDEV",
+    "public": true,
+    "$promise": {},
+    "$resolved": true
   }
 }
