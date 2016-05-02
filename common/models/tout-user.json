@@ -19,7 +19,7 @@
   "relations": {
     "commerces": {
       "type": "hasOne",
-      "model": "Commerce",
+      "model": "Business",
       "foreignKey": ""
     }
   },

@@ -1,5 +1,5 @@
 {
-  "name": "Commerce",
+  "name": "Business",
   "base": "PersistedModel",
   "strict": false,
   "idInjection": false,

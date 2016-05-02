@@ -23,7 +23,7 @@
   "relations": {
     "commerce": {
       "type": "belongsTo",
-      "model": "Commerce",
+      "model": "Business",
       "foreignKey": ""
     },
     "touts": {

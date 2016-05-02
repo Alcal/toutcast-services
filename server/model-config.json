@@ -55,7 +55,7 @@
     "$promise": {},
     "$resolved": true
   },
-  "Commerce": {
+  "Business": {
     "dataSource": "ToutCastDEV",
     "public": true,
     "$promise": {},
