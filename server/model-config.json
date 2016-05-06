@@ -66,5 +66,21 @@
     "public": true,
     "$promise": {},
     "$resolved": true
+  },
+  "accessToken": {
+    "dataSource": "ToutCastDEV",
+    "public": false
+  },
+  "userCredential": {
+    "dataSource": "ToutCastDEV",
+    "public": false
+  },
+  "userIdentity": {
+    "dataSource": "ToutCastDEV",
+    "public": false
+  },
+  "Redemption": {
+    "dataSource": "ToutCastDEV",
+    "public": false
   }
 }

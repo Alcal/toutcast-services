@@ -32,8 +32,13 @@
       "type": "belongsTo",
       "model": "Locale",
       "foreignKey": ""
+    },
+    "redemptions": {
+      "type": "hasMany",
+      "model": "Redemption",
+      "foreignKey": ""
     }
   },
   "acls": [],
-  "methods": []
+  "methods": {}
 }
