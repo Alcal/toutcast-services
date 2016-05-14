@@ -25,7 +25,7 @@ boot(app, __dirname, function(err) {
     app.start();
 });
 
-// Enable http session
+// Enable Http session
 app.use(loopback.session({ secret: 'fucking password' }));
  
 // Load the provider configurations

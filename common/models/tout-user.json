@@ -13,6 +13,12 @@
       "type": "geopoint",
       "required": false,
       "index": true
+    },
+    "email":
+    {
+      "type":"string",
+      "required": true,
+      "index": {"unique": true}
     }
   },
   "validations": [],

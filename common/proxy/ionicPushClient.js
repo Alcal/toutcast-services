@@ -1,13 +1,13 @@
-var http = require('https');
+var HTTP = require('https');
 var Promise = require('promise');
 
-const IONIC_ENDPOINT="api.ionic.io"; 
+const IONIC_ENDPOINT="api.ionic.io";
 const IONIC_API_KEY ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNGNiNDdhOC0zYzY1LTQ3NjgtYTI2OS03MmE3ZGUxMjIwMTAifQ.zhDoRnOdu-Z2V2eztzIQGrvE909RDu44rw5pexHIJ2g";
 const TEST_TOKEN = "eZc81p20SaQ:APA91bHMNdJ2rX766bHuhUUtkmkIJIHStEIjpcWY_prx3HWFhrn73XU5e0jZPlqo_CGMPI6x3vzMQ3NxMILbDc8nZ-q3cYnPCLd0tO-0SO3rBzxrKZgK57ozhscqZXGA4V18mWvCJ_S1";
 
 var ionicPushClient = {};
 module.exports = ionicPushClient;
-//The token must be passed along in the HTTP header Authorization, prefixed by the string "Bearer ", such as: 
+//The token must be passed along in the Http header Authorization, prefixed by the string "Bearer ", such as:
 //Authorization: Bearer abcde
 ionicPushClient.sendNotification = function(tout)
 {
@@ -38,7 +38,7 @@ ionicPushClient.sendNotification = function(tout)
 	  }
 	});
 
-	var options = 
+	var options =
 	{
 		host:IONIC_ENDPOINT,
 		headers:
@@ -55,13 +55,13 @@ ionicPushClient.sendNotification = function(tout)
 	//from the request
 	var pushResponse = '';
 
-	var pushPromise = new Promise(function(fulfill, reject)
+	return new Promise(function(fulfill, reject)
 	{
-		var pushRequest = http.request(options, 
+		var pushRequest = HTTP.request(options,
 		function(res)
 		{
 			res.on('data', function(chunk)
-			{	
+			{
 				//Here we concatenate the chunks we receive
 				//so that we can return the whole thing
 				//toghether when we're done
@@ -83,6 +83,5 @@ ionicPushClient.sendNotification = function(tout)
 		pushRequest.end();
 
 	});
-	
-	return pushPromise;
+
 };

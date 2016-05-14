@@ -3118,7 +3118,7 @@ module.factory(
          *
          * @description
          *
-         * Get data of the currently logged user. Fail with HTTP result 401
+         * Get data of the currently logged user. Fail with Http result 401
          * when there is no user logged in.
          *
          * @param {function(Object,Object)=} successCb
