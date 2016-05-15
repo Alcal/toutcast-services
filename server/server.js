@@ -1,11 +1,37 @@
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 
+
 var app = module.exports = loopback();
+
 
 //Part of Facebook login configuration
 var PassportConfigurator = require('loopback-component-passport').PassportConfigurator;
 var passportConfigurator = new PassportConfigurator(app);
+
+app.use(loopback.context());
+app.use(loopback.token());
+
+app.use(function setCurrentUser(req, res, next) {
+  if (!req.accessToken) {
+    console.log("No Token Found");
+    return next();
+  }
+  console.log(JSON.stringify(req.accessToken));
+  app.models.ToutUser.findById(req.accessToken.userId, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return next(new Error('No user with this access token was found.'));
+    }
+    var loopbackContext = loopback.getCurrentContext();
+    if (loopbackContext) {
+      loopbackContext.set('currentUser', user);
+    }
+    next();
+  });
+});
 
 app.start = function() {
   // start the web server
@@ -25,9 +51,11 @@ boot(app, __dirname, function(err) {
     app.start();
 });
 
+
+
 // Enable Http session
 app.use(loopback.session({ secret: 'fucking password' }));
- 
+
 // Load the provider configurations
 var config = {};
 try {
