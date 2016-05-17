@@ -23,7 +23,8 @@
       "index": true
     },
     "live": {
-      "type": "boolean"
+      "type": "boolean",
+      "index":true
     }
   },
   "validations": [],

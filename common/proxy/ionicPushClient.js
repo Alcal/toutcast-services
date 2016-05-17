@@ -26,7 +26,7 @@ ionicPushClient.sendNotification = function(tout)
 	    	"title": pushTitle,
 	    	"message": pushMessage,
 	    	"payload": {
-	            "toutId":12345,
+	            "toutId":tout.id,
 	            "location":tout.location
 	          },
 	    	"ledColor": "[255, 255, 255, 255]"

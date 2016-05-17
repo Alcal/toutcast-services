@@ -54,7 +54,6 @@ module.exports = function (Tout)
     };
     var onReject = function (err)
     {
-      console.log('Rejected!');
       console.log(err);
       callback(err);
     };
