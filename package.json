@@ -17,9 +17,9 @@
     "loopback-boot": "^2.6.5",
     "loopback-connector-mongodb": "^1.11.2",
     "loopback-datasource-juggler": "^2.19.0",
-    "loopback-component-passport":"2.1.0",
+    "loopback-component-passport": "2.1.0",
     "mongodb": "^2.0.35",
-    "passport-facebook":"2.1.0",
+    "passport-facebook": "2.1.0",
     "promise": "^7.1.1",
     "serve-favicon": "^2.0.1"
   },

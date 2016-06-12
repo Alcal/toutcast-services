@@ -74,7 +74,7 @@ module.exports = function (Tout)
 
   };
 
-  Tout.redeem = function (toutId, callback)
+  Tout.redeem = function (toutId, pin, callback)
   {
     if (typeof toutId === 'function')
     {
@@ -91,17 +91,28 @@ module.exports = function (Tout)
         var ctx = loopback.getCurrentContext();
         var currentUser = ctx && ctx.get('currentUser');
 
-        tout.redemptions.create(
-          {approved: true, date: Date.now(), toutUserId: currentUser.id||""},
-          function (redemptionError, redemption)
-          {
-            if (redemptionError)
+        tout.redemptions.count();
+        if (pin == tout.pin)
+        {
+          tout.redemptions.create(
+            {approved: true, date: Date.now(), toutUserId: currentUser.id || ""},
+            function (redemptionError, redemption)
             {
-              callback(redemptionError);
-            }
-            tout.redemption = redemption;
-            callback(null, tout);
-          });
+              if (redemptionError)
+              {
+                callback(redemptionError);
+              }
+              tout.redemption = redemption;
+              callback(null, tout);
+            });
+        }
+        else
+        {
+          const err = new Error('Pin did not match');
+          callback(err);
+        }
+
+
       });
   };
 
@@ -135,7 +146,8 @@ module.exports = function (Tout)
     'redeem',
     {
       accepts: [
-        {arg: "toutId", type: "String", required: true}
+        {arg: "toutId", type: "String", required: true},
+        {arg: "pin", type: "String", required: false}
       ],
       returns: {arg: "tout"},
       http: {verb: "POST", status: 200, errorStatus: 400}

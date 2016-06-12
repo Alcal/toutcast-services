@@ -14,11 +14,12 @@
       "required": false,
       "index": true
     },
-    "email":
-    {
-      "type":"string",
+    "email": {
+      "type": "string",
       "required": true,
-      "index": {"unique": true}
+      "index": {
+        "unique": true
+      }
     }
   },
   "validations": [],
