@@ -14,10 +14,8 @@ app.use(loopback.token());
 
 app.use(function setCurrentUser(req, res, next) {
   if (!req.accessToken) {
-    console.log("No Token Found");
     return next();
   }
-  console.log(JSON.stringify(req.accessToken));
   app.models.ToutUser.findById(req.accessToken.userId, function(err, user) {
     if (err) {
       return next(err);
@@ -37,7 +35,7 @@ app.start = function() {
   // start the web server
   return app.listen(function() {
     app.emit('started');
-    console.log('Web server listening at: %s', app.get('url'));
+    console.log('ToutCast Services started at at: %s', app.get('url'));
   });
 };
 

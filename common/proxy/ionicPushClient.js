@@ -9,14 +9,14 @@ var ionicPushClient = {};
 module.exports = ionicPushClient;
 //The token must be passed along in the Http header Authorization, prefixed by the string "Bearer ", such as:
 //Authorization: Bearer abcde
-ionicPushClient.sendNotification = function(tout)
+ionicPushClient.sendToutNotification = function(tout)
 {
 
 	var pushTitle = tout.title||'Gran oferta';
 	var pushMessage = tout.content||'Encuentrala en ToutCast';
 
 	var pushRequestBody = JSON.stringify({
-	  "tokens": [TEST_TOKEN],
+    "send_to_all": true,
 	  "profile": "dev_profile",
 	  "notification": {
 	    "title": pushTitle,

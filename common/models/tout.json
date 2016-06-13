@@ -6,6 +6,9 @@
   "options": {
     "validateUpsert": true
   },
+  "hidden": [
+    "pin"
+  ],
   "properties": {
     "title": {
       "type": "string"
@@ -26,6 +29,9 @@
       "type": "string"
     },
     "maxRedemptions": {
+      "type": "number"
+    },
+    "remainingRedemptions": {
       "type": "number"
     },
     "datePublished": {
@@ -49,6 +55,21 @@
       "foreignKey": ""
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "redeem"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "publish"
+    }
+  ],
   "methods": {}
 }
