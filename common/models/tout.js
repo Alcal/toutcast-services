@@ -91,6 +91,13 @@ module.exports = function (Tout)
         {
           callback(searchError);
         }
+        if(!tout)
+        {
+          var toutError = new Error('Tout was not found');
+          toutError.name = "NOT FOUND";
+          toutError.status = 404;
+          callback(toutError);
+        }
         //Get the user that is claiming the offer
         var ctx = loopback.getCurrentContext();
         var currentUser = ctx && ctx.get('currentUser');
