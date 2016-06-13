@@ -95,6 +95,14 @@ module.exports = function (Tout)
         var ctx = loopback.getCurrentContext();
         var currentUser = ctx && ctx.get('currentUser');
 
+        if(!currentUser)
+        {
+          var currentUserError = new Error('Must be an authenticated user');
+          currentUserError.name = "FORBIDDEN";
+          currentUserError.status = 401;
+          callback(currentUserError);
+        }
+
         tout.redemptions.findOne(
           {where:{toutUserId:currentUser.id}},
           function(countErr, redemption)
