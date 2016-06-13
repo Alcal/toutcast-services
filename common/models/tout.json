@@ -59,15 +59,15 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW",
+      "principalId": "$unauthenticated",
+      "permission": "DENY",
       "property": "redeem"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW",
+      "principalId": "$unauthenticated",
+      "permission": "DENY",
       "property": "publish"
     }
   ],
