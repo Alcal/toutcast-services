@@ -87,16 +87,16 @@ module.exports = function (Tout)
     Tout.findOne({where: {id: toutId}},
       function (searchError, tout)
       {
-        if (err)
+        if (searchError)
         {
-          callback(searchError);
+          return callback(searchError);
         }
-        if(!tout)
+        if(tout==null)
         {
           var toutError = new Error('Tout was not found');
           toutError.name = "NOT FOUND";
           toutError.status = 404;
-          callback(toutError);
+          return callback(toutError);
         }
         //Get the user that is claiming the offer
         var ctx = loopback.getCurrentContext();
@@ -107,7 +107,7 @@ module.exports = function (Tout)
           var currentUserError = new Error('Must be an authenticated user');
           currentUserError.name = "FORBIDDEN";
           currentUserError.status = 401;
-          callback(currentUserError);
+          return callback(currentUserError);
         }
 
         tout.redemptions.findOne(
@@ -116,14 +116,14 @@ module.exports = function (Tout)
           {
             if(countErr)
             {
-              callback(countErr);
+              return callback(countErr);
             }
             if(redemption)
             {
               const usedErr = new Error('User has redeemed this Tout already');
               usedErr.name = "USED";
               usedErr.status = 403;
-              callback(usedErr);
+              return callback(usedErr);
             }
 
             if (pin == tout.pin)
@@ -132,14 +132,14 @@ module.exports = function (Tout)
               {
                 if(countError)
                 {
-                  callback(countError);
+                  return callback(countError);
                 }
                 if(redemptionCount >= tout.maxRedemptions)
                 {
                   const maxErr = new Error('Max redemptions reached for this offer');
                   maxErr.name = "MAX";
                   maxErr.status = 403;
-                  callback(maxErr);
+                  return callback(maxErr);
                 }
 
 
@@ -149,12 +149,12 @@ module.exports = function (Tout)
                   {
                     if (redemptionError)
                     {
-                      callback(redemptionError);
+                      return callback(redemptionError);
                     }
                     tout.remainingRedemptions = tout.maxRedemptions - redemptionCount - 1;
                     tout.save();
                     tout.redemption = redemption;
-                    callback(null, tout);
+                    return callback(null, tout);
                   });
               });
             }
@@ -163,7 +163,7 @@ module.exports = function (Tout)
               const pinErr = new Error('Pin did not match');
               pinErr.name = "PIN";
               pinErr.status = 403;
-              callback(pinErr);
+              return callback(pinErr);
             }
           });
       });
