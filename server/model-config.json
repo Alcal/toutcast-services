@@ -82,5 +82,9 @@
   "Redemption": {
     "dataSource": "ToutCastDEV",
     "public": false
+  },
+  "Contact": {
+    "dataSource": "ToutCastDEV",
+    "public": false
   }
 }

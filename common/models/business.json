@@ -10,14 +10,14 @@
     "name": {
       "type": "string"
     },
-    "category": {
-      "type": "BusinessCategory"
+    "description": {
+      "type": "string"
     }
   },
   "validations": [],
   "relations": {
     "businessCategories": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "BusinessCategory",
       "foreignKey": ""
     },

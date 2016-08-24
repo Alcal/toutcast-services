@@ -17,6 +17,14 @@
     "location": {
       "type": "geopoint",
       "required": true
+    },
+    "coverImg": {
+      "type": "string"
+    },
+    "contacts": {
+      "type": [
+        "Contact"
+      ]
     }
   },
   "validations": [],

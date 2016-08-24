@@ -26,6 +26,7 @@ ionicPushClient.sendToutNotification = function(tout)
 	    	"title": pushTitle,
 	    	"message": pushMessage,
 	    	"payload": {
+				"localeId":tout.localeId,
 	            "toutId":tout.id,
 	            "location":tout.location
 	          },
