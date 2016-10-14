@@ -6,7 +6,8 @@ var app = module.exports = loopback();
 
 
 //Part of Facebook login configuration
-var PassportConfigurator = require('loopback-component-passport').PassportConfigurator;
+var PassportConfigurator =
+    require('loopback-component-passport').PassportConfigurator;
 var passportConfigurator = new PassportConfigurator(app);
 
 app.use(loopback.context());
@@ -60,7 +61,9 @@ try {
  config = require('./providers.json');
 } catch(err) {
  console.error('Please configure your passport strategy in `providers.json`.');
- console.error('Copy `providers.json.template` to `providers.json` and replace the clientID/clientSecret values with your own.');
+ console.error('Copy `providers.json.template` to `providers.json`'+
+                 ' and replace the clientID/clientSecret values' +
+                 ' with your own.');
  process.exit(1);
 }
 // Initialize passport

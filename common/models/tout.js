@@ -9,12 +9,12 @@ module.exports = function (Tout)
         'nearby',
         {
             accepts: [
-                {arg: "loc", type: "GeoPoint", required: true},
-                {arg: "rad", type: "Number"},
-                {arg: "cap", type: "Number"}
+                {arg: 'loc', type: 'GeoPoint', required: true},
+                {arg: 'rad', type: 'Number'},
+                {arg: 'cap', type: 'Number'}
             ],
-            returns: {arg: "touts"},
-            http: {verb: "GET", status: 200, errorStatus: 400}
+            returns: {arg: 'touts'},
+            http: {verb: 'GET', status: 200, errorStatus: 400}
         }
     );
 
@@ -22,10 +22,10 @@ module.exports = function (Tout)
         'publish',
         {
             accepts: [
-                {arg: "toutId", type: "String", required: true}
+                {arg: 'toutId', type: 'String', required: true}
             ],
             returns: {},
-            http: {verb: "POST", status: 200, errorStatus: 400}
+            http: {verb: 'POST', status: 200, errorStatus: 400}
         }
     );
 
@@ -33,15 +33,16 @@ module.exports = function (Tout)
         'redeem',
         {
             accepts: [
-                {arg: "toutId", type: "String", required: true},
-                {arg: "pin", type: "String", required: false}
+                {arg: 'toutId', type: 'String', required: true},
+                {arg: 'pin', type: 'String', required: false}
             ],
-            returns: {arg: "tout"},
-            http: {verb: "POST", status: 200, errorStatus: 400}
+            returns: {arg: 'tout'},
+            http: {verb: 'POST', status: 200, errorStatus: 400}
         });
 
     /*
-     * 	Searches for Touts based on a center point and a radius with an option for a cap
+     * 	Searches for Touts based on a center point
+     * 	and a radius with an option for a cap
      *	GeoPoint loc : center point
      *	Number 	rad : search radius in miles
      */
@@ -95,21 +96,21 @@ module.exports = function (Tout)
         };
 
         Tout.findOne({where: {id: toutId}},
-            function (err, tout)
+        function (err, tout)
+        {
+            if (err)
             {
-                if (err)
-                {
-                    callback(err);
-                }
+                callback(err);
+            }
 
-                tout.maxRedemptions = tout.maxRedemptions || 20;
-                tout.remainingRedemptions = tout.maxRedemptions;
-                tout.save();
-                var pushPromise = ionicPushClient.sendToutNotification(tout);
+            tout.maxRedemptions = tout.maxRedemptions || 20;
+            tout.remainingRedemptions = tout.maxRedemptions;
+            tout.save();
+            var pushPromise = ionicPushClient.sendToutNotification(tout);
 
-                pushPromise.then(onFulfill, onReject);
+            pushPromise.then(onFulfill, onReject);
 
-            });
+        });
 
     };
 
@@ -121,89 +122,98 @@ module.exports = function (Tout)
             callback(err);
         }
         Tout.findOne({where: {id: toutId}},
-            function (searchError, tout)
+        function (searchError, tout)
+        {
+            if (searchError)
             {
-                if (searchError)
-                {
-                    return callback(searchError);
-                }
-                if (tout == null)
-                {
-                    var toutError = new Error('Tout was not found');
-                    toutError.name = "NOT FOUND";
-                    toutError.status = 404;
-                    return callback(toutError);
-                }
-                //Get the user that is claiming the offer
-                var ctx = loopback.getCurrentContext();
-                var currentUser = ctx && ctx.get('currentUser');
+                return callback(searchError);
+            }
+            if (tout == null)
+            {
+                var toutError = new Error('Tout was not found');
+                toutError.name = 'NOT FOUND';
+                toutError.status = 404;
+                return callback(toutError);
+            }
+            //Get the user that is claiming the offer
+            var ctx = loopback.getCurrentContext();
+            var currentUser = ctx && ctx.get('currentUser');
 
-                if (!currentUser)
+            if (!currentUser)
+            {
+                var currentUserError =
+                    new Error('Must be an authenticated user');
+                currentUserError.name = 'FORBIDDEN';
+                currentUserError.status = 401;
+                return callback(currentUserError);
+            }
+
+            tout.redemptions.findOne(
+            {where: {toutUserId: currentUser.id}},
+            function (countErr, redemption)
+            {
+                if (countErr)
                 {
-                    var currentUserError = new Error('Must be an authenticated user');
-                    currentUserError.name = "FORBIDDEN";
-                    currentUserError.status = 401;
-                    return callback(currentUserError);
+                    return callback(countErr);
+                }
+                if (redemption)
+                {
+                    const usedErr =
+                        new Error('User has redeemed this Tout already');
+                    usedErr.name = 'USED';
+                    usedErr.status = 403;
+                    return callback(usedErr);
                 }
 
-                tout.redemptions.findOne(
-                    {where: {toutUserId: currentUser.id}},
-                    function (countErr, redemption)
+                if (pin === tout.pin)
+                {
+                    tout.redemptions.count(
+                        function (countError, redemptionCount)
                     {
-                        if (countErr)
+                        if (countError)
                         {
-                            return callback(countErr);
+                            return callback(countError);
                         }
-                        if (redemption)
+                        if (redemptionCount >= tout.maxRedemptions)
                         {
-                            const usedErr = new Error('User has redeemed this Tout already');
-                            usedErr.name = "USED";
-                            usedErr.status = 403;
-                            return callback(usedErr);
+                            const maxErr = new Error
+                                ('Max redemptions reached for this offer');
+                            maxErr.name = 'MAX';
+                            maxErr.status = 403;
+                            return callback(maxErr);
                         }
 
-                        if (pin == tout.pin)
+
+                        tout.redemptions.create(
                         {
-                            tout.redemptions.count(function (countError, redemptionCount)
+                            approved: true,
+                            date: Date.now(),
+                            toutUser: currentUser || ''
+                        },
+                        function (redemptionError, redemption)
+                        {
+                            if (redemptionError)
                             {
-                                if (countError)
-                                {
-                                    return callback(countError);
-                                }
-                                if (redemptionCount >= tout.maxRedemptions)
-                                {
-                                    const maxErr = new Error('Max redemptions reached for this offer');
-                                    maxErr.name = "MAX";
-                                    maxErr.status = 403;
-                                    return callback(maxErr);
-                                }
-
-
-                                tout.redemptions.create(
-                                    {approved: true, date: Date.now(), toutUser: currentUser || ""},
-                                    function (redemptionError, redemption)
-                                    {
-                                        if (redemptionError)
-                                        {
-                                            return callback(redemptionError);
-                                        }
-                                        tout.maxRedemptions = tout.maxRedemptions || 20;
-                                        tout.remainingRedemptions = tout.maxRedemptions - redemptionCount - 1;
-                                        tout.save();
-                                        tout.redemption = redemption;
-                                        return callback(null, tout);
-                                    });
-                            });
-                        }
-                        else
-                        {
-                            const pinErr = new Error('Pin did not match');
-                            pinErr.name = "PIN";
-                            pinErr.status = 403;
-                            return callback(pinErr);
-                        }
+                                return callback(redemptionError);
+                            }
+                            tout.maxRedemptions = tout.maxRedemptions || 20;
+                            tout.remainingRedemptions =
+                                tout.maxRedemptions - redemptionCount - 1;
+                            tout.save();
+                            tout.redemption = redemption;
+                            return callback(null, tout);
+                        });
                     });
+                }
+                else
+                {
+                    const pinErr = new Error('Pin did not match');
+                    pinErr.name = 'PIN';
+                    pinErr.status = 403;
+                    return callback(pinErr);
+                }
             });
+        });
     };
 
 

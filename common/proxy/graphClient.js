@@ -14,13 +14,17 @@ module.exports = graphClient;
 graphClient.getUserDetails = function (userToken, fields)
 {
 
-  var reducedFields = fields.reduce(function(last, current){return last + ',' +current},'id');
+  var reducedFields = fields.reduce(
+      function(last, current)
+      {
+        return last + ',' +current;
+      },'id');
 
   var queryStringParams =
   {
-    access_token:userToken,
-    fields:reducedFields,
-    format:'json'
+    'access_token':userToken,
+    'fields':reducedFields,
+    'format':'json'
   };
 
   var queryString = QueryString.stringify(queryStringParams);
@@ -50,17 +54,16 @@ graphClient.getUserDetails = function (userToken, fields)
         });
         res.on('end', function(){
           fulfill(JSON.parse(graphResponse));
-        })
+        });
       });
 
     graphRequest.on('error', function(err)
     {
-      console.log("Will reject promise with:");
+      console.log('Will reject promise with:');
       console.log(err);
       reject(err);
     });
-
-    graphRequest.write(pushRequestBody);
+    graphRequest.write();
     graphRequest.end();
   });
 
