@@ -6,7 +6,8 @@
     "node": "0.12.x"
   },
   "scripts": {
-    "pretest": "jshint ."
+    "pretest": "jshint .",
+    "test":"mocha"
   },
   "dependencies": {
     "compression": "^1.0.3",
@@ -27,7 +28,9 @@
     "loopback-explorer": "^1.1.0"
   },
   "devDependencies": {
-    "jshint": "^2.5.6"
+    "chai": "^3.5.0",
+    "jshint": "^2.5.6",
+    "mocha": "^3.1.2"
   },
   "repository": {
     "type": "",
