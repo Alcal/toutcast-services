@@ -159,6 +159,7 @@ describe('toutDelegate', function()
         mockery.registerMock('loopback',loopbackMock);
         mockery.registerMock('../proxy/ionicPushClient',ionicPushClientMock);
     });
+
     beforeEach(function ()
     {
         toutDelegate = require('../common/delegate/toutDelegate');
@@ -204,6 +205,14 @@ describe('toutDelegate', function()
         var toutDelegateImpl = toutDelegate(toutMocks.toutNotFoundMock);
         toutDelegateImpl.redeem('id','1234',spy);
         sinon.assert.calledWith(spy, sinon.match({id:'0'}));
+    });
+
+    it('publish fails if toutId is a function',function()
+    {
+        const err = new Error('Invalid argument format for: toutId');
+        toutDelegateImpl = toutDelegate(toutMocks.toutMock);
+        toutDelegateImpl.publish(function(){}, spy);     
+        sinon.assert.calledWith(spy, sinon.match(err));
     });
 
     after(function ()
