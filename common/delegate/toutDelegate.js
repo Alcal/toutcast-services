@@ -49,17 +49,17 @@ module.exports = function(Tout)
             if (typeof toutId === 'function')
             {
                 const err = new Error('Invalid argument format for: toutId');
-                callback(err);
+                return callback(err);
             }
     
             var onFulfill = function (data)
             {
-                callback(null, data);
+                return callback(null, data);
             };
             var onReject = function (err)
             {
                 console.log(err);
-                callback(err);
+                return callback(err);
             };
     
             Tout.findOne({where: {id: toutId}},
@@ -67,7 +67,7 @@ module.exports = function(Tout)
             {
                 if (err)
                 {
-                    callback(err);
+                    return callback(err);
                 }
 
                 tout.maxRedemptions = tout.maxRedemptions || 20;
