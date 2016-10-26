@@ -210,7 +210,7 @@ describe('toutDelegate', function()
     it('publish fails if toutId is a function',function()
     {
         const err = new Error('Invalid argument format for: toutId');
-        toutDelegateImpl = toutDelegate(toutMocks.toutMock);
+        var toutDelegateImpl = toutDelegate(toutMocks.toutMock);
         toutDelegateImpl.publish(function(){}, spy);     
         sinon.assert.calledWith(spy, sinon.match(err));
     });
