@@ -167,7 +167,7 @@ describe('toutDelegate', function()
     it('redeems touts normally', function()
     {
         var toutDelegateImpl = toutDelegate(toutMocks.toutMock);
-        toutDelegateImpl.redeem('id','1235',spy);
+        toutDelegateImpl.redeem('id','1234',spy);
         sinon.assert.calledWith(spy, null, sinon.match.has('pin', '1234'));
     });
 
